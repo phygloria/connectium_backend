@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    include: OAuth
+  datasource:
+    url: jdbc:mysql://localhost:3306/connectium
+    username: connectium
+    password: connectium
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework: INFO
+    org.hibernate: INFO
+    com.ohgiraffers.crud_back: DEBUG
+
+ftp:
+  server: 1.214.19.22
+  port: 2121
+  username: connectium
+  password: connectium
+  in-path: /HOMEPAGE/PROGRAM/IN/
+  out-path: /HOMEPAGE/PROGRAM/OUT/
+
+openapi:
+  key: 775276464663616e3736627a6b7a47
+  key2: 787650664663616e333645424e6d56
+
+jwt:
+  secret: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+  expiration: 3600
+
+
+
