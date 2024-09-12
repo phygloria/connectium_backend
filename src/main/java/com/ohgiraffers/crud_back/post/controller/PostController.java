@@ -146,6 +146,48 @@ public class PostController {
             }
         }
     }
+
+    @PutMapping("/post/{id}")
+    public ResponseEntity<PostDTO> updatePost(@PathVariable Long id,
+                                              @RequestParam("title") String title,
+                                              @RequestParam("content") String content,
+                                              @RequestParam("author") String author,
+                                              @RequestParam(value = "image", required = false) MultipartFile image) {
+        PostDTO.Builder builder = new PostDTO.Builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .author(author);
+
+        if (image != null && !image.isEmpty()) {
+            String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+            try {
+                boolean uploaded = uploadFileToFTP(image, fileName);
+                if (uploaded) {
+                    builder.imagePath(fileName);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+
+        PostDTO updatedPostDTO = builder.build();
+        return postService.updatePost(id, updatedPostDTO)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/post/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+        boolean deleted = postService.deletePost(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
 
 
