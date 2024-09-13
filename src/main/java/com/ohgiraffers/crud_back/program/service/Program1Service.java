@@ -17,11 +17,10 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-// 중랑구 문화행사 공공서비스예약 정보 조회
 @Service
 public class Program1Service {
 
-    private static final Logger logger = LoggerFactory.getLogger(Program2Service.class);
+    private static final Logger logger = LoggerFactory.getLogger(Program1Service.class);
 
     @Value("${openapi.key}")
     private String apiKey;
@@ -68,15 +67,16 @@ public class Program1Service {
 
                     Program1DTO event = new Program1DTO();
                     event.setSvcid(svcid);
-                    event.setSvcnm(getElementValue(row, "SVCNM")); // 서비스명
-                    event.setPlacenm(getElementValue(row, "PLACENM")); // 장소명
-                    event.setSvcopnbgndt(getElementValue(row, "SVCOPNBGNDT")); // 서비스개시시작일시
-                    event.setPayatnm(getElementValue(row, "PAYATNM")); // 무료/유료 상태
-                    event.setSvcstatnm(svcstatnm); // 서비스 상태
-                    event.setUsetgtinfo(usetgtinfo); // 서비스 대상
+                    event.setSvcnm(getElementValue(row, "SVCNM"));
+                    event.setPlacenm(getElementValue(row, "PLACENM"));
+                    event.setSvcopnbgndt(getElementValue(row, "SVCOPNBGNDT"));
+                    event.setPayatnm(getElementValue(row, "PAYATNM"));
+                    event.setSvcstatnm(svcstatnm);
+                    event.setUsetgtinfo(usetgtinfo);
 
-                    // 이미지 URL 설정 (FTP 서버의 이미지 파일명으로 설정)
-                    event.setImgurl("/api/programs/proxy-image?filename=event_" + svcid + ".jpg&type=program1");
+                    // 이미지 URL 설정 수정
+                    event.setImgurl("event_" + svcid + ".jpg");
+
                     events.add(event);
                 }
             }
@@ -96,22 +96,21 @@ public class Program1Service {
     }
 
     @Scheduled(cron = "0 0 1 * * ?") // 매일 새벽 1시에 실행
-    // 3일마다 새벽 1시: 0 0 1 */3 * ? , 매주 월요일 새벽 1시: 0 0 1 ? * MON
-
     public void updateCulProgramData() {
         try {
-            logger.info("교육 프로그램 데이터 업데이트 시작");
+            logger.info("문화 프로그램 데이터 업데이트 시작");
             List<Program1DTO> updatedData = getCulProgram();
-            // 여기서 updatedData를 저장하거나 처리합니다.
-            // 예: saveOrUpdateData(updatedData);
-            logger.info("교육 프로그램 데이터가 성공적으로 업데이트되었습니다. 업데이트된 항목 수: {}", updatedData.size());
+            logger.info("문화 프로그램 데이터가 성공적으로 업데이트되었습니다. 업데이트된 항목 수: {}", updatedData.size());
         } catch (Exception e) {
-            logger.error("교육 프로그램 데이터 업데이트 중 오류 발생", e);
+            logger.error("문화 프로그램 데이터 업데이트 중 오류 발생", e);
         }
     }
 
-    // 필요한 경우, 데이터를 저장하는 메소드를 추가할 수 있습니다.
-    // private void saveOrUpdateData(List<Program2DTO> data) {
-    //     // 데이터를 데이터베이스에 저장하거나 캐시를 업데이트하는 로직
-    // }
+    public Program1DTO getProgram1Detail(String svcid) {
+        List<Program1DTO> allPrograms = getCulProgram();
+        return allPrograms.stream()
+                .filter(program -> program.getSvcid().equals(svcid))
+                .findFirst()
+                .orElse(null);
+    }
 }

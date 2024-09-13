@@ -45,6 +45,7 @@ public class Program2Service {
         return parseXmlResponse(xmlResponse);
     }
 
+
     private List<Program2DTO> parseXmlResponse(String xmlResponse) {
         List<Program2DTO> events = new ArrayList<>();
 
@@ -54,7 +55,6 @@ public class Program2Service {
             Document document = builder.parse(new org.xml.sax.InputSource(new StringReader(xmlResponse)));
 
             NodeList rowList = document.getElementsByTagName("row");
-
 
 
             for (int i = 0; i < rowList.getLength(); i++) {
@@ -67,7 +67,7 @@ public class Program2Service {
                 // 필터링 조건 적용
                 if ("접수중".equals(svcstatnm) && "중랑구".equals(areanm) &&
                         (usetgtinfo.contains("어린이") || usetgtinfo.contains("가족") ||
-                        usetgtinfo.contains("제한없음") || usetgtinfo.contains("초등학생") || usetgtinfo.contains("유아"))) {
+                                usetgtinfo.contains("제한없음") || usetgtinfo.contains("초등학생") || usetgtinfo.contains("유아"))) {
 
                     Program2DTO event = new Program2DTO();
                     event.setMinclassnm(minclassnm);
@@ -76,12 +76,9 @@ public class Program2Service {
                     // 이미지 URL 처리 로직 추가
                     String imgurl = getElementValue(row, "IMGURL");
                     if (imgurl != null && !imgurl.isEmpty()) {
-                        event.setImgurl(imgurl);
+                        event.setImgurl("/api/programs/proxy-image?filename=" + imgurl + "&type=program2");
                     } else {
-                        System.out.println("IMGURL is missing or empty for item: " + event.getSvcnm());
-
-                        // 로거를 사용하는 경우 다음과 같이 변경할 수 있습니다:
-                        // logger.warn("IMGURL is missing or empty for item: {}", event.getSvcnm());
+                        logger.warn("IMGURL is missing or empty for item: {}", event.getSvcnm());
                     }
 
                     event.setDtlcont(getElementValue(row, "DTLCONT")); // 상세내용
@@ -96,6 +93,7 @@ public class Program2Service {
         return events;
     }
 
+
     private String getElementValue(Element parent, String tagName) {
         NodeList nodeList = parent.getElementsByTagName(tagName);
         if (nodeList.getLength() > 0) {
@@ -103,6 +101,7 @@ public class Program2Service {
         }
         return "";
     }
+
 
     @Scheduled(cron = "0 0 1 * * ?") // 매일 새벽 1시에 실행
     public void updateEduProgramData() {
@@ -121,4 +120,12 @@ public class Program2Service {
     // private void saveOrUpdateData(List<Program2DTO> data) {
     //     // 데이터를 데이터베이스에 저장하거나 캐시를 업데이트하는 로직
     // }
+
+    public Program2DTO getProgram2Detail(String svcid) {
+        List<Program2DTO> allPrograms = getEduProgram();
+        return allPrograms.stream()
+                .filter(program -> program.getSvcid().equals(svcid))
+                .findFirst()
+                .orElse(null);
+    }
 }

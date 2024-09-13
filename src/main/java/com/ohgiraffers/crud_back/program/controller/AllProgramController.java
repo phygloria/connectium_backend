@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -26,7 +23,16 @@ public class AllProgramController {
     private final RestTemplate restTemplate;
 
     @Value("${ftp.server}")
-    private String ftpServerUrl;
+    private String server;
+
+    @Value("${ftp.port}")
+    private int port;
+
+    @Value("${ftp.username}")
+    private String username;
+
+    @Value("${ftp.password}")
+    private String password;
 
     @Autowired
     public AllProgramController(Program1Service program1Service,
@@ -50,21 +56,27 @@ public class AllProgramController {
     @GetMapping("/proxy-image")
     public ResponseEntity<byte[]> proxyImage(@RequestParam String filename, @RequestParam(required = false) String type) {
         try {
-            String imageUrl;
-            if ("program1".equals(type)) {
-                // Program1의 경우 FTP 서버 URL을 사용
-                imageUrl = ftpServerUrl + "/HOMEPAGE/PROGRAM/IN/" + filename;
-            } else {
-                // Program2 또는 기타의 경우 제공된 URL을 그대로 사용
-                imageUrl = filename;
-            }
-
+            String imageUrl = String.format("ftp://%s:%d/HOMEPAGE/PROGRAM/IN/%s", server, port, filename);
+            // For authentication, you may need to set headers or use a different method
             ResponseEntity<byte[]> response = restTemplate.getForEntity(imageUrl, byte[].class);
             return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG) // 또는 적절한 콘텐츠 타입
+                    .contentType(MediaType.IMAGE_JPEG) // Adjust if necessary
                     .body(response.getBody());
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/detail/{type}/{svcid}")
+    public ResponseEntity<?> getProgramDetail(@PathVariable String type, @PathVariable String svcid) {
+        if ("CulProgram".equals(type)) {
+            Program1DTO detail = program1Service.getProgram1Detail(svcid);
+            return ResponseEntity.ok(detail);
+        } else if ("EduProgram".equals(type)) {
+            Program2DTO detail = program2Service.getProgram2Detail(svcid);
+            return ResponseEntity.ok(detail);
+        } else {
+            return ResponseEntity.badRequest().body("Invalid program type");
         }
     }
 }
