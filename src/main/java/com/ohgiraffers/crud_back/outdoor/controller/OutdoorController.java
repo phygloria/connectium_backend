@@ -32,7 +32,7 @@ public class OutdoorController {
     private OutdoorService outdoorService;
 
     // 전체목록
-    @GetMapping
+    @GetMapping("/outdoor")
     public ResponseEntity<List<OutdoorDTO>> getAllOutdoors() {
         return ResponseEntity.ok(outdoorService.getAllOutdoors());
     }
