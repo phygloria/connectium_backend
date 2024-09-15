@@ -2,9 +2,9 @@ spring:
   profiles:
     include: OAuth
   datasource:
-    url: jdbc:mysql://localhost:3306/connectium
-    username: connectium
-    password: connectium
+    url: jdbc:mysql://localhost:3306/crud_db
+    username: root
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -28,7 +28,6 @@ ftp:
   password: connectium
   in-path: /HOMEPAGE/PROGRAM/IN/
   out-path: /HOMEPAGE/PROGRAM/OUT/
-
 
 openapi:
   key: 775276464663616e3736627a6b7a47
