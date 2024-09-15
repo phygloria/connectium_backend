@@ -15,22 +15,23 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+
     @Autowired
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
+    }
+
+    // 전체 게시글을 목록
+    public List<PostDTO> getAllPosts() {
+        return postRepository.findAllByOrderByIdDesc().stream()
+                .map(this::enhancePostWithImageUrl)
+                .collect(Collectors.toList());
     }
 
     // PostDTO 받아서 게시글등록
     public PostEntity createPost(PostDTO postDTO){
         PostEntity postEntity = toPostEntity(postDTO);
         return postRepository.save(postEntity);
-    }
-
-    // 모든 게시글을 조회
-    public List<PostDTO> getAllPosts() {
-        return postRepository.findAll().stream()
-                .map(this::enhancePostWithImageUrl)
-                .collect(Collectors.toList());
     }
 
     // 게시물 수정 (Builder 패턴 유지)
