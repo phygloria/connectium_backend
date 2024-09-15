@@ -37,7 +37,6 @@ public class OutdoorController {
         return ResponseEntity.ok(outdoorService.getAllOutdoors());
     }
 
-
     @GetMapping("/outdoor/{id}")
     public ResponseEntity<OutdoorDTO> getOutdoorById(@PathVariable Long id) {
         return outdoorService.getOutdoorById(id)
