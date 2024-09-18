@@ -5,6 +5,9 @@ import com.ohgiraffers.crud_back.post.model.entity.PostEntity;
 import com.ohgiraffers.crud_back.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +24,20 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    // 전체 게시글을 목록
-    public List<PostDTO> getAllPosts() {
-        return postRepository.findAllByOrderByIdDesc().stream()
-                .map(this::enhancePostWithImageUrl)
+//    // 전체 게시글을 목록
+//    public List<PostDTO> getAllPosts() {
+//        return postRepository.findAllByOrderByIdDesc().stream()
+//                .map(this::enhancePostWithImageUrl)
+//                .collect(Collectors.toList());
+//    }
+
+    // 페이징된 게시글 전체 목록 조회
+    public List<PostDTO> getAllPosts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PostEntity> postPage = postRepository.findAllByOrderByIdDesc(pageable);
+
+        return postPage.getContent().stream()
+                .map(this::enhancePostWithImageUrl)  // 원래의 기능을 유지하면서 페이징 적용
                 .collect(Collectors.toList());
     }
 
