@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
@@ -19,6 +17,7 @@ public class JwtTokenUtil {
 
     private final SecretKey key;
     private final Long expiration;
+    private Set<String> invalidatedTokens = new HashSet<>();
 
     public JwtTokenUtil(@Value("${jwt.secret}") String secret,
                         @Value("${jwt.expiration}") Long expiration) {
@@ -63,8 +62,12 @@ public class JwtTokenUtil {
         return expiration.before(new Date());
     }
 
+    public void invalidateToken(String token) {
+        invalidatedTokens.add(token);
+    }
+
     public Boolean validateToken(String token, String username) {
         final String usernameFromToken = getUsernameFromToken(token);
-        return (usernameFromToken.equals(username) && !isTokenExpired(token));
+        return (usernameFromToken.equals(username) && !isTokenExpired(token) && !invalidatedTokens.contains(token));
     }
 }
