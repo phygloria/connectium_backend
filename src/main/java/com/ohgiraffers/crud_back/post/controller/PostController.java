@@ -39,9 +39,19 @@ public class PostController {
         this.postService = postService;
     }
 
+//    전체 게시물 조회
+//    @GetMapping("/post")
+//    public ResponseEntity<List<PostDTO>> getAllPosts() {
+//        return ResponseEntity.ok(postService.getAllPosts());
+//    }
+
+    // 페이징 처리한 전체 게시물 조회
     @GetMapping("/post")
-    public ResponseEntity<List<PostDTO>> getAllPosts() {
-        return ResponseEntity.ok(postService.getAllPosts());
+    public ResponseEntity<List<PostDTO>> getAllPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<PostDTO> posts = postService.getAllPosts(page, size);
+        return ResponseEntity.ok(posts);
     }
 
     @PostMapping("/post")
