@@ -7,6 +7,7 @@ public class PostDTO {
     private String content;
     private String author;
     private String imagePath;
+    private int viewCount;
 
     private PostDTO(Builder builder) {
         this.id = builder.id;
@@ -14,6 +15,7 @@ public class PostDTO {
         this.content = builder.content;
         this.author = builder.author;
         this.imagePath = builder.imagePath;
+        this.viewCount = builder.viewCount;
     }
 
     public static class Builder{
@@ -23,6 +25,7 @@ public class PostDTO {
         private String content;
         private String author;
         private String imagePath;
+        private int viewCount;
 
         public Builder id(Long id) {
             this.id = id;
@@ -49,6 +52,11 @@ public class PostDTO {
             return this;
         }
 
+        public Builder viewCount(int viewCount) {
+            this.viewCount = viewCount;
+            return this;
+        }
+
         public PostDTO build() {
             return new PostDTO(this);
         }
@@ -60,6 +68,7 @@ public class PostDTO {
     public String getContent() { return content; }
     public String getAuthor() { return author; }
     public String getImagePath() { return imagePath; }
+    public int getViewCount() { return viewCount; }
 
     public void setImagePath(String imageUrl) {
         this.imagePath = imageUrl;
@@ -74,6 +83,7 @@ public class PostDTO {
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
                 ", imagePath='" + imagePath + '\'' +
+                ", viewCount=" + viewCount +
                 '}';
     }
 }

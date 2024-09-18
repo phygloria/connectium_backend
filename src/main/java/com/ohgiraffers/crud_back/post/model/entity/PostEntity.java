@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "posts")
+@Table(name = "post_QnA")
 
 public class PostEntity {
 
@@ -24,12 +24,16 @@ public class PostEntity {
     @Column
     private String imagePath;
 
+    @Column(nullable = false)
+    private int viewCount = 0;
+
     private PostEntity(Builder builder) {
         this.id = builder.id;
         this.title = builder.title;
         this.content = builder.content;
         this.author = builder.author;
         this.imagePath = builder.imagePath;
+        this.viewCount = builder.viewCount;
     }
 
     public static class Builder {
@@ -38,6 +42,7 @@ public class PostEntity {
         private String content;
         private String author;
         private String imagePath;
+        private int viewCount = 0;
 
         public Builder id(Long id) {
             this.id = id;
@@ -64,6 +69,11 @@ public class PostEntity {
             return this;
         }
 
+        public Builder viewCount(int viewCount) {
+            this.viewCount = viewCount;
+            return this;
+        }
+
         public PostEntity build() {
             return new PostEntity(this);
         }
@@ -75,10 +85,15 @@ public class PostEntity {
     public String getContent() { return content; }
     public String getAuthor() { return author; }
     public String getImagePath() { return imagePath; }
+    public int getViewCount() { return viewCount; }
 
     // Setters
     public void setImagePath(String imageUrl) {
         this.imagePath = imageUrl;
+    }
+
+    public void incrementViewCount() {
+        this.viewCount++;
     }
 
     // No-args constructor for JPA

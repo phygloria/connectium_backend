@@ -57,11 +57,14 @@ public class PostService {
         }
         return false;
     }
-
-    //  ID로 게시글을 조회
+    // 게시물 상세 조회
     public Optional<PostDTO> getPostById(Long id) {
-        return postRepository.findById(id)
-                .map(this::enhancePostWithImageUrl);
+        return postRepository.findById(id).map(post -> {
+            post.incrementViewCount(); // 조회수 증가
+            PostEntity updatedPost = postRepository.save(post); // 변경된 조회수 저장 후 반환된 엔티티를 받음
+
+            return enhancePostWithImageUrl(updatedPost); // 엔티티를 DTO로 변환하여 반환
+        });
     }
 
     // 이미지 url 추가
@@ -81,6 +84,7 @@ public class PostService {
                 .content(entity.getContent())
                 .author(entity.getAuthor())
                 .imagePath(entity.getImagePath())  // 수정: imagePath 사용
+                .viewCount(entity.getViewCount())
                 .build();
     }
     // dto → entity
@@ -90,6 +94,7 @@ public class PostService {
                 .content(postDTO.getContent())
                 .author(postDTO.getAuthor())
                 .imagePath(postDTO.getImagePath())
+                .viewCount(postDTO.getViewCount())
                 .build();
         return postEntity;
     }
