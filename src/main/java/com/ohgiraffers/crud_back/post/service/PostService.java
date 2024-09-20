@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,9 +44,30 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    // PostDTO 받아서 게시글등록
-    public PostEntity createPost(PostDTO postDTO){
-        PostEntity postEntity = toPostEntity(postDTO);
+    //게시글 등록
+    public PostEntity createPost(PostDTO postDTO) {
+        // 현재 로그인한 사용자의 정보를 가져옴
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = null;
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                currentUsername = ((UserDetails) principal).getUsername();
+            } else {
+                currentUsername = principal.toString(); // UserDetails 타입이 아닌 경우 처리
+            }
+        }
+
+        // author를 로그인한 사용자의 username으로 설정
+        PostEntity postEntity = new PostEntity.Builder()
+                .title(postDTO.getTitle())
+                .content(postDTO.getContent())
+                .author(currentUsername)  // 현재 로그인한 사용자의 username을 author로 설정
+                .imagePath(postDTO.getImagePath())
+                .viewCount(postDTO.getViewCount())
+                .build();
+
         return postRepository.save(postEntity);
     }
 
