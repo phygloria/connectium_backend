@@ -32,7 +32,11 @@ public class CommunityPostService {
 
     public CommunityPostDTO getPost(Long id) {
         return repository.findById(id)
-                .map(this::convertToDTO)
+                .map(post -> {
+                    CommunityPost updatedPost = post.copyWithIncrementedViewCount();
+                    CommunityPost savedPost = repository.save(updatedPost);
+                    return convertToDTO(savedPost);
+                })
                 .orElseThrow(() -> new RuntimeException("Post not found"));
     }
 
@@ -49,6 +53,7 @@ public class CommunityPostService {
         post.setAuthorName(postDTO.getAuthorName());
         post.setContent(postDTO.getContent());
         post.setCategory(postDTO.getCategory());
+        post.setViewCount(post.getViewCount());
 
         return convertToDTO(repository.save(post));
     }
@@ -64,15 +69,18 @@ public class CommunityPostService {
         dto.setAuthorName(post.getAuthorName());
         dto.setContent(post.getContent());
         dto.setCategory(post.getCategory());
+        dto.setViewCount(post.getViewCount());
         return dto;
     }
 
     private CommunityPost convertToEntity(CommunityPostDTO dto) {
         CommunityPost post = new CommunityPost();
+        post.setId(dto.getId());
         post.setTitle(dto.getTitle());
         post.setAuthorName(dto.getAuthorName());
         post.setContent(dto.getContent());
         post.setCategory(dto.getCategory());
+        post.setViewCount(dto.getViewCount());
         return post;
     }
 }
