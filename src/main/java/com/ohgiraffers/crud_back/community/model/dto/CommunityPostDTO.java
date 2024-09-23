@@ -6,16 +6,18 @@ public class CommunityPostDTO {
     private String authorName;
     private String content;
     private String category;
+    private int viewCount;
 
     public CommunityPostDTO() {
     }
 
-    public CommunityPostDTO(Long id, String title, String authorName, String content, String category) {
+    public CommunityPostDTO(Long id, String title, String authorName, String content, String category, int viewCount) {
         this.id = id;
         this.title = title;
         this.authorName = authorName;
         this.content = content;
         this.category = category;
+        this.viewCount = viewCount;
     }
 
     public Long getId() {
@@ -58,6 +60,14 @@ public class CommunityPostDTO {
         this.category = category;
     }
 
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
     @Override
     public String toString() {
         return "CommunityPostDTO{" +
@@ -66,6 +76,7 @@ public class CommunityPostDTO {
                 ", authorName='" + authorName + '\'' +
                 ", content='" + content + '\'' +
                 ", category='" + category + '\'' +
+                ", viewCount=" + viewCount +
                 '}';
     }
 }

@@ -1,6 +1,9 @@
 package com.ohgiraffers.crud_back.community.model.entity;
 
+import com.ohgiraffers.crud_back.post.model.entity.PostEntity;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "community_posts")
@@ -21,15 +24,19 @@ public class CommunityPost {
     @Column(nullable = false)
     private String category;
 
+    @Column(nullable = false)
+    private int viewCount = 0;
+
     public CommunityPost() {
     }
 
-    public CommunityPost(Long id, String title, String authorName, String content, String category) {
+    public CommunityPost(Long id, String title, String authorName, String content, String category, int viewCount) {
         this.id = id;
         this.title = title;
         this.authorName = authorName;
         this.content = content;
         this.category = category;
+        this.viewCount = viewCount;
     }
 
     public Long getId() {
@@ -72,6 +79,30 @@ public class CommunityPost {
         this.category = category;
     }
 
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public void incrementViewCount() {
+        this.viewCount++;
+    }
+
+    // New method for copying with incremented view count
+    public CommunityPost copyWithIncrementedViewCount() {
+        return new CommunityPost(
+                this.getId(),
+                this.getTitle(),
+                this.getAuthorName(),
+                this.getContent(),
+                this.getCategory(),
+                this.getViewCount() + 1
+        );
+    }
+
     @Override
     public String toString() {
         return "CommunityPost{" +
@@ -80,6 +111,7 @@ public class CommunityPost {
                 ", authorName='" + authorName + '\'' +
                 ", content='" + content + '\'' +
                 ", category='" + category + '\'' +
+                ", viewCount=" + viewCount +
                 '}';
     }
 }
