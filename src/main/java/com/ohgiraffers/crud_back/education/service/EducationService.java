@@ -43,14 +43,15 @@ public class EducationService {
         EducationDTO dto = new EducationDTO();
         dto.setId(educationEntity.getId());
         dto.setName(educationEntity.getName());
-        dto.setAddress(educationEntity.getAddress());
-        dto.setPhone(educationEntity.getPhone());
-        dto.setFeature(educationEntity.getFeature());
-        dto.setOpr_info(educationEntity.getOpr_info());
-        dto.setOpr_hours(educationEntity.getOpr_hours());
-        dto.setEnt_fee(educationEntity.getEnt_fee());
+        dto.setRegistrationPeriod(educationEntity.getRegistrationPeriod());
+        dto.setTargetAudience(educationEntity.getTargetAudience());
+        dto.setLocation(educationEntity.getLocation());
+        dto.setCost(educationEntity.getCost());
+        dto.setEducationPeriod(educationEntity.getEducationPeriod());
+        dto.setPhoneNumber(educationEntity.getPhoneNumber());
         dto.setWeb_url(educationEntity.getWeb_url());
         dto.setImagePath(educationEntity.getImagePath());
         return dto;
     }
+
 }
