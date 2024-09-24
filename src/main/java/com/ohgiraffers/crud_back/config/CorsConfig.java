@@ -13,12 +13,13 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8081")  // 프론트엔드 주소
+                        .allowedOrigins("http://localhost:8081", "https://yeyak.seoul.go.kr")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                         .allowedHeaders("*")
                         .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                        // 응답 헤더 허용 : 서버에서 특정 헤더를 클라이언트로 노출
                         .allowCredentials(true)
-                        .maxAge(3600);
+                        .maxAge(3600); // 브라우저의 PreFlight 요청을 캐시하여 성능을 향상
             }
         };
     }

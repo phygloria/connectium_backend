@@ -13,42 +13,42 @@ public class EducationEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String address;
+    @Column(name = "registration_period", nullable = false)
+    private String registrationPeriod;        //접수기간
+
+    @Column(name = "target_audience", nullable = false)
+    private String targetAudience;          //대상
 
     @Column(nullable = false)
-    private String phone;
-
-    @Column(nullable = false)
-    private String feature;
-
-    @Column(nullable = false)
-    private String opr_info;
-
-    @Column(nullable = false)
-    private String opr_hours;
+    private String location;            //장소
 
     @Column(nullable = true)
-    private String ent_fee;
+    private String cost;            //비용
 
-    @Column(nullable = true)
+    @Column(name = "education_period", nullable = false)
+    private String educationPeriod;         //교육기간
+
+    @Column(name = "phone_number", nullable = true)
+    private String phoneNumber;         //전화번호
+
+    @Column(name = "web_url", nullable = true)
     private String web_url;
 
-    @Column(nullable = true)
+    @Column(name = "image_path", nullable = true)
     private String imagePath;
 
     public EducationEntity() {
     }
 
-    public EducationEntity(Long id, String name, String address, String phone, String feature, String opr_info, String opr_hours, String ent_fee, String web_url, String imagePath) {
+    public EducationEntity(Long id, String name, String registrationPeriod, String targetAudience, String location, String cost, String educationPeriod, String phoneNumber, String web_url, String imagePath) {
         this.id = id;
         this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.feature = feature;
-        this.opr_info = opr_info;
-        this.opr_hours = opr_hours;
-        this.ent_fee = ent_fee;
+        this.registrationPeriod = registrationPeriod;
+        this.targetAudience = targetAudience;
+        this.location = location;
+        this.cost = cost;
+        this.educationPeriod = educationPeriod;
+        this.phoneNumber = phoneNumber;
         this.web_url = web_url;
         this.imagePath = imagePath;
     }
@@ -69,52 +69,52 @@ public class EducationEntity {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getRegistrationPeriod() {
+        return registrationPeriod;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRegistrationPeriod(String registrationPeriod) {
+        this.registrationPeriod = registrationPeriod;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTargetAudience() {
+        return targetAudience;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTargetAudience(String targetAudience) {
+        this.targetAudience = targetAudience;
     }
 
-    public String getFeature() {
-        return feature;
+    public String getLocation() {
+        return location;
     }
 
-    public void setFeature(String feature) {
-        this.feature = feature;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getOpr_info() {
-        return opr_info;
+    public String getCost() {
+        return cost;
     }
 
-    public void setOpr_info(String opr_info) {
-        this.opr_info = opr_info;
+    public void setCost(String cost) {
+        this.cost = cost;
     }
 
-    public String getOpr_hours() {
-        return opr_hours;
+    public String getEducationPeriod() {
+        return educationPeriod;
     }
 
-    public void setOpr_hours(String opr_hours) {
-        this.opr_hours = opr_hours;
+    public void setEducationPeriod(String educationPeriod) {
+        this.educationPeriod = educationPeriod;
     }
 
-    public String getEnt_fee() {
-        return ent_fee;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setEnt_fee(String ent_fee) {
-        this.ent_fee = ent_fee;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getWeb_url() {
@@ -138,12 +138,12 @@ public class EducationEntity {
         return "EducationEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", feature='" + feature + '\'' +
-                ", opr_info='" + opr_info + '\'' +
-                ", opr_hours='" + opr_hours + '\'' +
-                ", ent_fee='" + ent_fee + '\'' +
+                ", registrationPeriod='" + registrationPeriod + '\'' +
+                ", targetAudience='" + targetAudience + '\'' +
+                ", location='" + location + '\'' +
+                ", cost='" + cost + '\'' +
+                ", educationPeriod='" + educationPeriod + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", web_url='" + web_url + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 '}';

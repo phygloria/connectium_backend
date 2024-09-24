@@ -75,7 +75,7 @@ public class Program1Service {
                     event.setUsetgtinfo(usetgtinfo);
 
                     // 이미지 URL 설정 수정
-                    event.setImgurl("event_" + svcid + ".jpg");
+                    event.setImgurl("/HOMEPAGE/PROGRAM/IN/event_" + svcid + ".jpg");
 
                     events.add(event);
                 }

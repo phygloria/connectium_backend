@@ -1,11 +1,15 @@
 package com.ohgiraffers.crud_back.post.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ohgiraffers.crud_back.comment.model.entity.Comment;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 @Table(name = "post_QnA")
-
 public class PostEntity {
 
     @Id
@@ -26,6 +30,12 @@ public class PostEntity {
 
     @Column(nullable = false)
     private int viewCount = 0;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Comment> comments = new ArrayList<>();
+
+    protected PostEntity() {}
 
     private PostEntity(Builder builder) {
         this.id = builder.id;
@@ -86,6 +96,7 @@ public class PostEntity {
     public String getAuthor() { return author; }
     public String getImagePath() { return imagePath; }
     public int getViewCount() { return viewCount; }
+    public List<Comment> getComments() { return comments; }
 
     // Setters
     public void setImagePath(String imageUrl) {
@@ -96,7 +107,28 @@ public class PostEntity {
         this.viewCount++;
     }
 
-    // No-args constructor for JPA
-    protected PostEntity() {}
+    // Comment related methods
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setPost(this);
+    }
 
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setPost(null);
+    }
+
+    // New method for copying with incremented view count
+    public PostEntity copyWithIncrementedViewCount() {
+        PostEntity newPost = new PostEntity.Builder()
+                .id(this.getId())
+                .title(this.getTitle())
+                .content(this.getContent())
+                .author(this.getAuthor())
+                .imagePath(this.getImagePath())
+                .viewCount(this.getViewCount() + 1)
+                .build();
+        newPost.comments = new ArrayList<>(this.comments);
+        return newPost;
+    }
 }
