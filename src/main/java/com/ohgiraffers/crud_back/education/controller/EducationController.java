@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8081")
 public class EducationController {
 
     @Value("${ftp.server}")
@@ -49,9 +46,8 @@ public class EducationController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/educationImages/{imageName}")
+    @GetMapping("/images/education/{imageName}")
     public ResponseEntity<byte[]> getImage(@PathVariable String imageName) throws IOException {
-
         FTPClient ftpClient = new FTPClient();
 
         try {
@@ -59,7 +55,8 @@ public class EducationController {
             ftpClient.login(FTP_USER, FTP_PASSWORD);
             ftpClient.enterLocalPassiveMode();
 
-            try (InputStream inputStream = ftpClient.retrieveFileStream(imageName)) {
+            String fullPath = "/HOMEPAGE/education/" + imageName;
+            try (InputStream inputStream = ftpClient.retrieveFileStream(fullPath)) {
                 if (inputStream == null) {
                     return ResponseEntity.notFound().build();
                 }
