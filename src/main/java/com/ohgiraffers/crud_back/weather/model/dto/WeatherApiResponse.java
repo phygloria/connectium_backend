@@ -1,4 +1,4 @@
-package com.ohgiraffers.crud_back.wether.model.dto;
+package com.ohgiraffers.crud_back.weather.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -140,6 +140,12 @@ public class WeatherApiResponse {
         private String baseTime;
         @JsonProperty("category")
         private String category;
+        @JsonProperty("fcstDate")
+        private String fcstDate;
+        @JsonProperty("fcstTime")
+        private String fcstTime;
+        @JsonProperty("fcstValue")
+        private String fcstValue;
         @JsonProperty("nx")
         private String nx;
         @JsonProperty("ny")
@@ -147,52 +153,32 @@ public class WeatherApiResponse {
         @JsonProperty("obsrValue")
         private String obsrValue;
 
-        public String getBaseDate() {
-            return baseDate;
-        }
+        // Getter와 Setter 메소드
+        public String getBaseDate() { return baseDate; }
+        public void setBaseDate(String baseDate) { this.baseDate = baseDate; }
 
-        public void setBaseDate(String baseDate) {
-            this.baseDate = baseDate;
-        }
+        public String getBaseTime() { return baseTime; }
+        public void setBaseTime(String baseTime) { this.baseTime = baseTime; }
 
-        public String getBaseTime() {
-            return baseTime;
-        }
+        public String getCategory() { return category; }
+        public void setCategory(String category) { this.category = category; }
 
-        public void setBaseTime(String baseTime) {
-            this.baseTime = baseTime;
-        }
+        public String getFcstDate() { return fcstDate; }
+        public void setFcstDate(String fcstDate) { this.fcstDate = fcstDate; }
 
-        public String getCategory() {
-            return category;
-        }
+        public String getFcstTime() { return fcstTime; }
+        public void setFcstTime(String fcstTime) { this.fcstTime = fcstTime; }
 
-        public void setCategory(String category) {
-            this.category = category;
-        }
+        public String getFcstValue() { return fcstValue; }
+        public void setFcstValue(String fcstValue) { this.fcstValue = fcstValue; }
 
-        public String getNx() {
-            return nx;
-        }
+        public String getNx() { return nx; }
+        public void setNx(String nx) { this.nx = nx; }
 
-        public void setNx(String nx) {
-            this.nx = nx;
-        }
+        public String getNy() { return ny; }
+        public void setNy(String ny) { this.ny = ny; }
 
-        public String getNy() {
-            return ny;
-        }
-
-        public void setNy(String ny) {
-            this.ny = ny;
-        }
-
-        public String getObsrValue() {
-            return obsrValue;
-        }
-
-        public void setObsrValue(String obsrValue) {
-            this.obsrValue = obsrValue;
-        }
+        public String getObsrValue() { return obsrValue; }
+        public void setObsrValue(String obsrValue) { this.obsrValue = obsrValue; }
     }
 }

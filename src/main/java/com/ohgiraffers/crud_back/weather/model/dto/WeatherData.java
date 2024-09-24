@@ -1,4 +1,4 @@
-package com.ohgiraffers.crud_back.wether.model.dto;
+package com.ohgiraffers.crud_back.weather.model.dto;
 
 import java.time.LocalDateTime;
 
