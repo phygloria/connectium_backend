@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/api/post/**", "/api/images/**", "/api/comments/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/post/**", "/api/images/**", "/api/comments/**","/proxy-image","/api/programs/proxy-image").permitAll()
                         .requestMatchers("/api/community/**").authenticated()  // 커뮤니티 API에 인증 필요
                         .anyRequest().authenticated()
                 )
