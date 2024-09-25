@@ -19,7 +19,7 @@ public class CommunityEntity {
     @Column(nullable = false, length = 1000)
     private String content;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String category;
 
     @Column(nullable = false)
@@ -93,7 +93,7 @@ public class CommunityEntity {
                 .title(this.getTitle())
                 .authorName(this.getAuthorName())
                 .content(this.getContent())
-                .category(this.getCategory())
+                .category(this.getCategory())  // 이 줄을 추가
                 .viewCount(this.getViewCount() + 1)
                 .build();
 
