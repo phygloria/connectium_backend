@@ -1,7 +1,7 @@
 package com.ohgiraffers.crud_back.community.controller;
 
-import com.ohgiraffers.crud_back.community.model.dto.CommunityPostDTO;
-import com.ohgiraffers.crud_back.community.service.CommunityPostService;
+import com.ohgiraffers.crud_back.community.model.dto.CommunityDTO;
+import com.ohgiraffers.crud_back.community.service.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,36 +9,36 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/community")
-public class CommunityPostController {
-    private final CommunityPostService service;
+public class CommunityController {
+    private final CommunityService service;
 
     @Autowired
-    public CommunityPostController(CommunityPostService service) {
+    public CommunityController(CommunityService service) {
         this.service = service;
     }
 
     @GetMapping
-    public List<CommunityPostDTO> getAllPosts() {
+    public List<CommunityDTO> getAllPosts() {
         return service.getAllPosts();
     }
 
     @GetMapping("/category/{category}")
-    public List<CommunityPostDTO> getPostsByCategory(@PathVariable String category) {
+    public List<CommunityDTO> getPostsByCategory(@PathVariable String category) {
         return service.getPostsByCategory(category);
     }
 
     @GetMapping("/{id}")
-    public CommunityPostDTO getPost(@PathVariable Long id) {
+    public CommunityDTO getPost(@PathVariable Long id) {
         return service.getPost(id);
     }
 
     @PostMapping
-    public CommunityPostDTO createPost(@RequestBody CommunityPostDTO postDTO) {
+    public CommunityDTO createPost(@RequestBody CommunityDTO postDTO) {
         return service.createPost(postDTO);
     }
 
     @PutMapping("/{id}")
-    public CommunityPostDTO updatePost(@PathVariable Long id, @RequestBody CommunityPostDTO postDTO) {
+    public CommunityDTO updatePost(@PathVariable Long id, @RequestBody CommunityDTO postDTO) {
         return service.updatePost(id, postDTO);
     }
 

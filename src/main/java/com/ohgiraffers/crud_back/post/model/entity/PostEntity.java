@@ -35,6 +35,8 @@ public class PostEntity {
     @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
+    protected PostEntity() {}
+
     private PostEntity(Builder builder) {
         this.id = builder.id;
         this.title = builder.title;
@@ -115,9 +117,6 @@ public class PostEntity {
         comments.remove(comment);
         comment.setPost(null);
     }
-
-    // No-args constructor for JPA
-    protected PostEntity() {}
 
     // New method for copying with incremented view count
     public PostEntity copyWithIncrementedViewCount() {
