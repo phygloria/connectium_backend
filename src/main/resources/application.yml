@@ -41,14 +41,3 @@ openapi:
 jwt:
   secret: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
   expiration: 3600
-
-weather:
-  api:
-    key: "oYlZ3s12CCpWogr488cJRvx1CrjY9jPOWhM6xkj8kD3gb%2BKmo8MNFhCEu%2FCNrJ5B%2Fla40ocHY5AtQBod2%2Fw69Q%3D%3D"
-    url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
-    data-type: JSON
-    num-of-rows: 10
-    page-no: 1
-    default:
-      nx: 62
-      ny: 128
