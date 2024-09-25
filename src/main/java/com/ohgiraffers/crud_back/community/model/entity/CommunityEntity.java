@@ -93,6 +93,7 @@ public class CommunityEntity {
                 .title(this.getTitle())
                 .authorName(this.getAuthorName())
                 .content(this.getContent())
+                .category(this.getCategory())  // 이 줄을 추가
                 .viewCount(this.getViewCount() + 1)
                 .build();
 
