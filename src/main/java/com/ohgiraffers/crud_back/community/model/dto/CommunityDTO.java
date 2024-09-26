@@ -3,7 +3,7 @@ package com.ohgiraffers.crud_back.community.model.dto;
 public class CommunityDTO {
     private Long id;
     private String title;
-    private String authorName;
+    private String author;
     private String content;
     private String category;
     private int viewCount;
@@ -13,7 +13,7 @@ public class CommunityDTO {
     public CommunityDTO(Builder builder) {
         this.id = builder.id;
         this.title = builder.title;
-        this.authorName = builder.authorName;
+        this.author = builder.author;
         this.content = builder.content;
         this.category = builder.category;
         this.viewCount = builder.viewCount;
@@ -23,7 +23,7 @@ public class CommunityDTO {
 
         private Long id;
         private String title;
-        private String authorName;
+        private String author;
         private String content;
         private String category;
         private int viewCount;
@@ -38,8 +38,8 @@ public class CommunityDTO {
             return this;
         }
 
-        public Builder authorName(String authorName) {
-            this.authorName = authorName;
+        public Builder author(String author) {
+            this.author = author;
             return this;
         }
 
@@ -71,8 +71,8 @@ public class CommunityDTO {
         return title;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getAuthor() {
+        return author;
     }
 
     public String getContent() {
