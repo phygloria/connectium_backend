@@ -3,7 +3,7 @@ package com.ohgiraffers.crud_back.community.model.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "community_posts")
+@Table(name = "community_tables")
 public class CommunityEntity {
 
     @Id
@@ -14,7 +14,7 @@ public class CommunityEntity {
     private String title;
 
     @Column(nullable = false)
-    private String authorName;
+    private String author;
 
     @Column(nullable = false, length = 1000)
     private String content;
@@ -31,7 +31,7 @@ public class CommunityEntity {
     private CommunityEntity(Builder builder) {
         this.id = builder.id;
         this.title = builder.title;
-        this.authorName = builder.authorName;
+        this.author = builder.author;
         this.content = builder.content;
         this.category = builder.category;
         this.viewCount = builder.viewCount;
@@ -40,7 +40,7 @@ public class CommunityEntity {
     public static class Builder {
         private Long id;
         private String title;
-        private String authorName;
+        private String author;
         private String content;
         private String category;
         private int viewCount = 0;
@@ -55,8 +55,8 @@ public class CommunityEntity {
             return this;
         }
 
-        public Builder authorName(String authorName) {
-            this.authorName = authorName;
+        public Builder author(String author) {
+            this.author = author;
             return this;
         }
 
@@ -81,7 +81,7 @@ public class CommunityEntity {
 
     public Long getId() { return id; }
     public String getTitle() { return title; }
-    public String getAuthorName() { return authorName; }
+    public String getAuthor() { return author; }
     public String getContent() { return content; }
     public String getCategory() { return category; }
     public int getViewCount() { return viewCount; }
@@ -91,7 +91,7 @@ public class CommunityEntity {
         CommunityEntity newCommunity = new Builder()
                 .id(this.getId())
                 .title(this.getTitle())
-                .authorName(this.getAuthorName())
+                .author(this.getAuthor())
                 .content(this.getContent())
                 .category(this.getCategory())  // 이 줄을 추가
                 .viewCount(this.getViewCount() + 1)

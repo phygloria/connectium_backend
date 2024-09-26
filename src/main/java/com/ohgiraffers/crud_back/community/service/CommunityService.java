@@ -66,7 +66,7 @@ public class CommunityService {
         }
 
         // 작성자 본인인 경우 접근 가능
-        if (authentication.getName().equals(post.getAuthorName())) {
+        if (authentication.getName().equals(post.getAuthor())) {
             return true;
         }
 
@@ -93,7 +93,7 @@ public class CommunityService {
         // DTO에서 authorName을 현재 사용자 이름으로 설정한 새로운 DTO를 빌더 패턴으로 생성
         CommunityDTO updatedDTO = new CommunityDTO.Builder()
                 .title(postDTO.getTitle())
-                .authorName(currentUsername) // 여기서 로그인한 사용자 이름 설정
+                .author(currentUsername) // 여기서 로그인한 사용자 이름 설정
                 .content(postDTO.getContent())
                 .category(postDTO.getCategory())
                 .viewCount(postDTO.getViewCount())
@@ -115,7 +115,7 @@ public class CommunityService {
         CommunityEntity updatedPost = new CommunityEntity.Builder()
                 .id(post.getId())  // 기존 ID 유지
                 .title(communityDTO.getTitle())  // 새로운 제목으로 변경
-                .authorName(communityDTO.getAuthorName())  // 새로운 작성자 이름으로 변경
+                .author(communityDTO.getAuthor())  // 새로운 작성자 이름으로 변경
                 .content(communityDTO.getContent())  // 새로운 내용으로 변경
                 .category(communityDTO.getCategory())  // 새로운 카테고리로 변경
                 .viewCount(post.getViewCount())  // 조회수는 그대로 유지
@@ -132,7 +132,7 @@ public class CommunityService {
         return new CommunityDTO.Builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
-                .authorName(entity.getAuthorName())
+                .author(entity.getAuthor())
                 .content(entity.getContent())
                 .category(entity.getCategory())
                 .viewCount(entity.getViewCount())
@@ -143,7 +143,7 @@ public class CommunityService {
         return new CommunityEntity.Builder()
                 .id(dto.getId())
                 .title(dto.getTitle())
-                .authorName(dto.getAuthorName())
+                .author(dto.getAuthor())
                 .content(dto.getContent())
                 .category(dto.getCategory())
                 .viewCount(dto.getViewCount())
