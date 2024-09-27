@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommentDTO {
+
     private Long id;
     private String content;
     private String author;
     private Long postId;
+    private Long communityId; // CommunityId 추가
     private Long parentId;
     private LocalDateTime createdAt;
     private List<CommentDTO> replies;
@@ -18,6 +20,7 @@ public class CommentDTO {
         this.content = builder.content;
         this.author = builder.author;
         this.postId = builder.postId;
+        this.communityId = builder.communityId;  // CommunityId 추가
         this.parentId = builder.parentId;
         this.createdAt = builder.createdAt;
         this.replies = builder.replies;
@@ -28,6 +31,7 @@ public class CommentDTO {
         private String content;
         private String author;
         private Long postId;
+        private Long communityId; // CommunityId 필드 추가
         private Long parentId;
         private LocalDateTime createdAt;
         private List<CommentDTO> replies = new ArrayList<>();
@@ -52,6 +56,11 @@ public class CommentDTO {
             return this;
         }
 
+        public Builder communityId(Long communityId) {  // CommunityId Builder 추가
+            this.communityId = communityId;
+            return this;
+        }
+
         public Builder parentId(Long parentId) {
             this.parentId = parentId;
             return this;
@@ -73,11 +82,36 @@ public class CommentDTO {
     }
 
     // Getters
-    public Long getId() { return id; }
-    public String getContent() { return content; }
-    public String getAuthor() { return author; }
-    public Long getPostId() { return postId; }
-    public Long getParentId() { return parentId; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public List<CommentDTO> getReplies() { return replies; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public Long getCommunityId() {  // Getter 추가
+        return communityId;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public List<CommentDTO> getReplies() {
+        return replies;
+    }
 }
+

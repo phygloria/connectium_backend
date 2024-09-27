@@ -1,6 +1,7 @@
 package com.ohgiraffers.crud_back.comment.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ohgiraffers.crud_back.community.model.entity.CommunityEntity;
 import com.ohgiraffers.crud_back.post.model.entity.PostEntity;
 import jakarta.persistence.*;
 
@@ -12,14 +13,18 @@ import java.util.List;
 @Table(name = "comments")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    @JsonIgnoreProperties("comments")
+    @JoinColumn(name = "post_id", nullable = true)
     private PostEntity post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "community_id", nullable = true)
+    private CommunityEntity community;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -37,19 +42,9 @@ public class Comment {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    public Comment() {
-    }
+    public Comment() {}
 
-    public Comment(Long id, PostEntity post, Comment parent, List<Comment> replies, String content, String author, LocalDateTime createdAt) {
-        this.id = id;
-        this.post = post;
-        this.parent = parent;
-        this.replies = replies;
-        this.content = content;
-        this.author = author;
-        this.createdAt = createdAt;
-    }
-
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -64,6 +59,16 @@ public class Comment {
 
     public void setPost(PostEntity post) {
         this.post = post;
+        this.community = null; // Ensure only one is set
+    }
+
+    public CommunityEntity getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(CommunityEntity community) {
+        this.community = community;
+        this.post = null; // Ensure only one is set
     }
 
     public Comment getParent() {
@@ -105,19 +110,6 @@ public class Comment {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", post=" + post +
-                ", parent=" + parent +
-                ", replies=" + replies +
-                ", content='" + content + '\'' +
-                ", author='" + author + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
-    }
-
-    // Getters and setters
 }
+
+

@@ -3,6 +3,7 @@ package com.ohgiraffers.crud_back.community.service;
 import com.ohgiraffers.crud_back.community.model.dto.CommunityDTO;
 import com.ohgiraffers.crud_back.community.model.entity.CommunityEntity;
 import com.ohgiraffers.crud_back.community.repository.CommunityRepository;
+import com.ohgiraffers.crud_back.post.model.entity.PostEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -149,4 +151,14 @@ public class CommunityService {
                 .viewCount(dto.getViewCount())
                 .build();
     }
+
+    public Optional<CommunityEntity> getCommunityEntityById(Long id) {
+        return repository.findById(id);
+    }
+
+    public CommunityEntity saveCommunity(CommunityEntity post) {
+        return repository.save(post);
+    }
+
+
 }

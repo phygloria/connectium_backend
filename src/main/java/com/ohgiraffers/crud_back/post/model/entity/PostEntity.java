@@ -2,6 +2,7 @@ package com.ohgiraffers.crud_back.post.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ohgiraffers.crud_back.comment.model.entity.Comment;
+import com.ohgiraffers.crud_back.utility.post.BaseEntity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -10,40 +11,22 @@ import java.util.List;
 
 @Entity
 @Table(name = "post_QnA")
-public class PostEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
-    private String title;
-
-    @Column(columnDefinition = "TEXT")
-    private String content;
-
-    @Column(nullable = false)
-    private String author;
+public class PostEntity extends BaseEntity {
 
     @Column
     private String imagePath;
 
-    @Column(nullable = false)
-    private int viewCount = 0;
-
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
-    protected PostEntity() {}
+    protected PostEntity() {
+        super();
+    }
 
     private PostEntity(Builder builder) {
-        this.id = builder.id;
-        this.title = builder.title;
-        this.content = builder.content;
-        this.author = builder.author;
+        super(builder.id, builder.title, builder.author, builder.content, builder.viewCount);
         this.imagePath = builder.imagePath;
-        this.viewCount = builder.viewCount;
+        this.comments = builder.comments != null ? builder.comments : new ArrayList<>();
     }
 
     public static class Builder {
@@ -53,6 +36,7 @@ public class PostEntity {
         private String author;
         private String imagePath;
         private int viewCount = 0;
+        private List<Comment> comments;
 
         public Builder id(Long id) {
             this.id = id;
@@ -84,19 +68,24 @@ public class PostEntity {
             return this;
         }
 
+        public Builder comments(List<Comment> comments) {
+            this.comments = comments;
+            return this;
+        }
+
         public PostEntity build() {
             return new PostEntity(this);
         }
     }
 
     // Getters
-    public Long getId() { return id; }
-    public String getTitle() { return title; }
-    public String getContent() { return content; }
-    public String getAuthor() { return author; }
-    public String getImagePath() { return imagePath; }
-    public int getViewCount() { return viewCount; }
-    public List<Comment> getComments() { return comments; }
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
 
     // Setters
     public void setImagePath(String imageUrl) {
@@ -104,10 +93,10 @@ public class PostEntity {
     }
 
     public void incrementViewCount() {
-        this.viewCount++;
+        this.setViewCount(this.getViewCount() + 1);
     }
 
-    // Comment related methods
+    // 댓글 추가 및 삭제
     public void addComment(Comment comment) {
         comments.add(comment);
         comment.setPost(this);
@@ -118,17 +107,16 @@ public class PostEntity {
         comment.setPost(null);
     }
 
-    // New method for copying with incremented view count
+    // 복사 후 조회수 증가 메서드
     public PostEntity copyWithIncrementedViewCount() {
-        PostEntity newPost = new PostEntity.Builder()
+        return new Builder()
                 .id(this.getId())
                 .title(this.getTitle())
                 .content(this.getContent())
                 .author(this.getAuthor())
                 .imagePath(this.getImagePath())
                 .viewCount(this.getViewCount() + 1)
+                .comments(new ArrayList<>(this.comments))  // 댓글 리스트도 복사
                 .build();
-        newPost.comments = new ArrayList<>(this.comments);
-        return newPost;
     }
 }
