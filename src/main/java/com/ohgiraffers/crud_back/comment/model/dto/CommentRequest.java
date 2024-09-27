@@ -2,16 +2,25 @@ package com.ohgiraffers.crud_back.comment.model.dto;
 
 public class CommentRequest {
     private Long postId;
+    private Long communityId;
     private String content;
     private Long parentId;
 
-    // Getters and setters
+    // Getters and Setters
     public Long getPostId() {
         return postId;
     }
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public Long getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(Long communityId) {
+        this.communityId = communityId;
     }
 
     public String getContent() {
