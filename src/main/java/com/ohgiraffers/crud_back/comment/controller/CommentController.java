@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
+
     @Autowired
     private CommentService commentService;
 
@@ -23,10 +24,8 @@ public class CommentController {
     public ResponseEntity<CommentDTO> addComment(@RequestBody CommentRequest request,
                                                  @AuthenticationPrincipal UserDetails userDetails) {
         try {
-            CommentDTO comment = commentService.addComment(request.getPostId(), request.getContent(),
-                    userDetails.getUsername(), request.getParentId());
-
-            // 댓글 저장 후 즉시 조회하여 확인
+            CommentDTO comment = commentService.addComment(request.getPostId(), request.getCommunityId(),
+                    request.getContent(), userDetails.getUsername(), request.getParentId());
             CommentDTO savedComment = commentService.getCommentById(comment.getId());
             return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
         } catch (IllegalArgumentException e) {
@@ -39,4 +38,11 @@ public class CommentController {
         List<CommentDTO> comments = commentService.getCommentsByPostId(postId);
         return ResponseEntity.ok(comments);
     }
+
+    @GetMapping("/community/{communityId}")
+    public ResponseEntity<List<CommentDTO>> getCommentsByCommunityId(@PathVariable Long communityId) {
+        List<CommentDTO> comments = commentService.getCommentsByCommunityId(communityId);
+        return ResponseEntity.ok(comments);
+    }
 }
+
