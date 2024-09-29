@@ -44,9 +44,8 @@ public class OutdoorController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/outdoorImages/{imageName}")
+    @GetMapping("/images/outdoor/{imageName}")
     public ResponseEntity<byte[]> getImage(@PathVariable String imageName) throws IOException {
-
         FTPClient ftpClient = new FTPClient();
 
         try {
@@ -54,7 +53,8 @@ public class OutdoorController {
             ftpClient.login(FTP_USER, FTP_PASSWORD);
             ftpClient.enterLocalPassiveMode();
 
-            try (InputStream inputStream = ftpClient.retrieveFileStream(imageName)) {
+            String fullPath = "/HOMEPAGE/place/" + imageName;  // FTP 서버 경로 추가
+            try (InputStream inputStream = ftpClient.retrieveFileStream(fullPath)) {
                 if (inputStream == null) {
                     return ResponseEntity.notFound().build();
                 }
