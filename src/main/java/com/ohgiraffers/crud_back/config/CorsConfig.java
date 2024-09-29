@@ -13,7 +13,8 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8081", "https://connectium-frontend.vercel.app", "http://1.214.19.22:8081", "https://yeyak.seoul.go.kr")
+                        .allowedOrigins("http://localhost:8081", "https://connectium-frontend.vercel.app", "http://1.214.19.22:8081",
+                                        "https://yeyak.seoul.go.kr", "http://192.168.0.40", "http://10.0.2.2:8080")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                         .allowedHeaders("*")
                         .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
