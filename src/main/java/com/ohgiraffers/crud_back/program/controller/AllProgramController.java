@@ -78,11 +78,19 @@ public class AllProgramController {
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-            String remoteFilePath = ftpInPath + filename;
-            InputStream inputStream = ftpClient.retrieveFileStream(remoteFilePath);
+            String[] paths = {"/HOMEPAGE/PROGRAM/IN/", "/HOMEPAGE/PROGRAM/OUT/"};
+            InputStream inputStream = null;
+
+            for (String path : paths) {
+                String remoteFilePath = path + filename;
+                inputStream = ftpClient.retrieveFileStream(remoteFilePath);
+                if (inputStream != null) {
+                    break;
+                }
+            }
 
             if (inputStream == null) {
-                logger.warn("File not found on FTP server: {}", remoteFilePath);
+                logger.warn("File not found on FTP server: {}", filename);
                 return ResponseEntity.notFound().build();
             }
 

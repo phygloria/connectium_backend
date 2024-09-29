@@ -1,4 +1,4 @@
-package com.ohgiraffers.crud_back.wether.service;
+package com.ohgiraffers.crud_back.weather.service;
 
 import org.springframework.stereotype.Service;
 import java.util.HashMap;

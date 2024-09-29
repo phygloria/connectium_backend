@@ -106,27 +106,6 @@ public class PostService {
                 .build();
     }
 
-    public PostDTO convertToDTO(PostEntity entity) {
-        return new PostDTO.Builder()
-                .id(entity.getId())
-                .title(entity.getTitle())
-                .content(entity.getContent())
-                .author(entity.getAuthor())
-                .imagePath(entity.getImagePath())
-                .viewCount(entity.getViewCount())
-                .build();
-    }
-
-    public PostEntity convertToEntity(PostDTO dto) {
-        return new PostEntity.Builder()
-                .id(dto.getId())
-                .title(dto.getTitle())
-                .content(dto.getContent())
-                .author(dto.getAuthor())
-                .imagePath(dto.getImagePath())
-                .viewCount(dto.getViewCount())
-                .build();
-    }
 
     public Optional<PostEntity> getPostEntityById(Long id) {
         return postRepository.findById(id);
