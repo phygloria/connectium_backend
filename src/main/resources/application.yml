@@ -29,9 +29,9 @@ ftp:
   connect-timeout: 5000
   data-timeout: 10000
 
-  image:
-    storage:
-      path: ${java.io.tmpdir}/program_images
+image:
+  storage:
+    path: ${java.io.tmpdir}/program_images
 
 openapi:
   key: 775276464663616e3736627a6b7a47
@@ -52,4 +52,3 @@ weather:
     default:
       nx: 62
       ny: 128
-
