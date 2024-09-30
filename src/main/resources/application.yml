@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/connectium
+    url: jdbc:mysql://localhost:3306/connectium?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     username: connectium
     password: connectium
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,17 +9,25 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-mvc:
-  locale: en_US
-  locale-resolver: fixed
-  log-resolved-exception: true
-  pathmatch:
-    matching-strategy: ant-path-matcher
-  default-charset: UTF-8  # UTF-8 인코딩 설정
+    properties:
+      hibernate:
+        connection:
+          characterEncoding: utf8
+          useUnicode: true
+  web:
+    locale: en_US
+    locale-resolver: fixed
+  mvc:
+    log-resolved-exception: true
+    pathmatch:
+      matching-strategy: ant-path-matcher
 
 server:
   port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
 
 logging:
   level:
@@ -37,9 +45,9 @@ ftp:
   connect-timeout: 5000
   data-timeout: 10000
 
-  image:
-    storage:
-      path: ${java.io.tmpdir}/program_images
+image:
+  storage:
+    path: ${java.io.tmpdir}/program_images
 
 openapi:
   key: 775276464663616e3736627a6b7a47
@@ -48,7 +56,7 @@ openapi:
 
 jwt:
   secret: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
-  expiration: 3600
+  expiration: 7200
 
 weather:
   api:
