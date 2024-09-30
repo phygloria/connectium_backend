@@ -10,6 +10,14 @@ spring:
       ddl-auto: update
     show-sql: true
 
+mvc:
+  locale: en_US
+  locale-resolver: fixed
+  log-resolved-exception: true
+  pathmatch:
+    matching-strategy: ant-path-matcher
+  default-charset: UTF-8  # UTF-8 인코딩 설정
+
 server:
   port: 8080
 
