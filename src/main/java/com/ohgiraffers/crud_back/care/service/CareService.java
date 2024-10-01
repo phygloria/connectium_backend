@@ -36,7 +36,7 @@ public class CareService {
 
     private CareDTO enhanceCareImageUrl(CareEntity care) {
         if (care.getImagePath() != null && !care.getImagePath().isEmpty()) {
-            String imageUrl = String.format("api/images/%s", care.getImagePath());
+            String imageUrl = String.format("/api/images/Care service/%s", care.getImagePath());
             care.setImagePath(imageUrl);
         }
         return changeToDTO(care);

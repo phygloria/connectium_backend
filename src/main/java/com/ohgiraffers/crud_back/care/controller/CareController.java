@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/care")
+@RequestMapping("/api")
 public class CareController {
 
     @Value("${ftp.server}")
@@ -33,12 +33,12 @@ public class CareController {
     private CareService careService;
 
     // 전체목록
-    @GetMapping
+    @GetMapping("/care")
     public ResponseEntity<List<CareDTO>> getAllCares() {
         return ResponseEntity.ok(careService.getAllCares());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/care/{id}")
     public ResponseEntity<CareDTO> getAllCareById(@PathVariable Long id) {
         return careService.getCareById(id)
                 .map(ResponseEntity::ok)
