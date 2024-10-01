@@ -70,8 +70,15 @@ public class Program2Service {
                                 usetgtinfo.contains("제한없음") || usetgtinfo.contains("초등학생") || usetgtinfo.contains("유아"))) {
 
                     Program2DTO event = new Program2DTO();
+                    event.setSvcid(getElementValue(row, "SVCID")); // 추가: SVCID 설정
                     event.setMinclassnm(minclassnm);
-                    event.setSvcnm(getElementValue(row, "SVCNM")); // 서비스명
+                    event.setSvcnm(getElementValue(row, "SVCNM"));
+                    event.setPlacenm(getElementValue(row, "PLACENM")); // 추가: PLACENM 설정
+                    event.setSvcopnbgndt(getElementValue(row, "SVCOPNBGNDT")); // 추가: SVCOPNBGNDT 설정
+                    event.setPayatnm(getElementValue(row, "PAYATNM")); // 추가: PAYATNM 설정
+                    event.setSvcstatnm(svcstatnm);
+                    event.setUsetgtinfo(usetgtinfo);
+                    event.setSvcurl(getElementValue(row, "SVCURL")); // 추가: URL 설정
 
                     // 이미지 URL 처리 로직 추가
                     String imgurl = getElementValue(row, "IMGURL");

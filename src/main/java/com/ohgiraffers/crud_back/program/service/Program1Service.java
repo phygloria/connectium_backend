@@ -73,6 +73,7 @@ public class Program1Service {
                     event.setPayatnm(getElementValue(row, "PAYATNM"));
                     event.setSvcstatnm(svcstatnm);
                     event.setUsetgtinfo(usetgtinfo);
+                    event.setSvcurl(getElementValue(row, "SVCURL"));
 
                     // 이미지 URL 설정 수정
                     event.setImgurl("/HOMEPAGE/PROGRAM/IN/event_" + svcid + ".jpg");
