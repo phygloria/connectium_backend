@@ -118,19 +118,17 @@ public class AllProgramController {
     }
 
     public boolean isValidFilename(String filename) {
-        // 파일 이름이 null이거나 비어있는지 확인
         if (filename == null || filename.isEmpty()) {
             return false;
         }
 
-        // 파일 이름에 허용되지 않는 문자(예: <, >, :, ", /, \, |, ?, *)가 포함되어 있는지 확인
-        String invalidChars = "<>:\"/\\|?*";
+        // 파일 이름에 허용되지 않는 문자(예: <, >, :, ", \, |, ?, *)가 포함되어 있는지 확인
+        String invalidChars = "<>:\"|?*";
         for (char c : invalidChars.toCharArray()) {
             if (filename.indexOf(c) >= 0) {
                 return false;
             }
         }
-
         return true;
     }
 
