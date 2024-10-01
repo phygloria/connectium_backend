@@ -38,4 +38,15 @@ public class CommentRequest {
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
+
+    // 추가: toString 메서드 오버라이드
+    @Override
+    public String toString() {
+        return "CommentRequest{" +
+                "postId=" + postId +
+                ", communityId=" + communityId +
+                ", content='" + content + '\'' +
+                ", parentId=" + parentId +
+                '}';
+    }
 }

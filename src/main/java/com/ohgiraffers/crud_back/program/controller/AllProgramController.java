@@ -78,7 +78,7 @@ public class AllProgramController {
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-            String[] paths = {"/HOMEPAGE/PROGRAM/IN/", "/HOMEPAGE/PROGRAM/OUT/"};
+            String[] paths = {"/HOMEPAGE/PROGRAM/IN/"};
             InputStream inputStream = null;
 
             for (String path : paths) {
