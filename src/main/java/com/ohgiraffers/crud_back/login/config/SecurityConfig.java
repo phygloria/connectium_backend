@@ -36,6 +36,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/api/post/**", "/api/images/**", "/api/comments/**").permitAll()
+                        .requestMatchers("/api/programs/**").permitAll()
                         .requestMatchers("/api/community/**","/api/todos/**","/api/care").authenticated()  // 커뮤니티 API에 인증 필요
                         .anyRequest().authenticated()
                 )
